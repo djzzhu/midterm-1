@@ -30,10 +30,10 @@ p.main {
 .legend {
   position: absolute;
   background-color: #fff;
-  right: 100px;
+  right: 0;
   width: 200px;
   top: 100px;
-  bottom: 400px;
+  bottom: 350px;
   z-index: 2000;
 }
 

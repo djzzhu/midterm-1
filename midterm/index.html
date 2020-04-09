@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <!-- CSS Imports -->
-
+    <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
@@ -11,40 +11,121 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <div id="intro">
-        <h1>Garbage Collection Map</h1>
-        <p class="main">The city of Philadelphia collects garbage from
-        Monday—Friday. The city is divided into 67 regions, each of which is
-        assigned to one of the five days of the week.</p>
-        <p>This application shows each region color coded based on day of
-        week of garbage collection. To get more information about garbage
-        collection for one of the regions, click on that region on the map.</p>
+        <h1 id='title' style="color:green; font-weight:bold;">Philadelphia Green Space </h1>
+        <p id= "mainslide" class="main" style="font-size: 16pt">The city of Philadelphia have abundant green spaces, either within the community or near the riverway.
+        These valuable spaces provide various experience for people to explore this wonderful city.</p>
+        <p>This application shows each region color coded based the type of the green spaces.
+        To get more information about asset name and address, click on that region on the map.</p>
+        <img src="https://generocity.org/philly/wp-content/uploads/sites/2/2018/07/Fairmount-Park-Visit-Philadelphia-skyline-green.jpg"
+          alt="Fairmount Park" height="250" width="300">
       </div>
-      <div id="results" style="display: none;">
-        <h1 class="day-of-week">Day of Week</h1>
-        <p class="main">Your garbage collection day is <span class="day-of-week">
-        Day of Week</span>.</p>
-        <p>Please be sure to leave your garbage outside on <span class="day-of-week">
-        Day of Week</span>. If this week is a federal holiday, leave your
-        garbage outside on the following day.</p>
-      </div>
+        <div id="results" class="results" style="display: none;">
+        <h1 class="information"  style="color:green;font-weight:bold;">asset name</h1>
+        <p class="main">This green space is <span class="information">
+        asset name</span>.</p>
+        <p>Please check this <span class="address" style="color:red; font-size: 10pt; font-weight:bold;">
+        address name</span> address, if you need additional information.</p>
+        </div>
+      <button id="my-button1">Previous Slide
+      </button>
+      <button id="my-button">Next Slide
+      </button>
     </div>
     <!-- Map -->
     <div id="map" class="map"></div>
     <!-- Legend -->
     <div class="legend">
-    <div class='legend-title'>Collection Day</div>
+    <div class='legend-title' style="color:Green; font-weight:bold;">Green Space Usage </div>
     <div class='legend-scale'>
        <ul class='legend-labels'>
-       <li><span style='background:#ff1000;'></span>Monday</li>
-       <li><span style='background:#feb236;'></span>Tuesday</li>
-       <li><span style='background:#405d27;'></span>Wednesday</li>
-       <li><span style='background:#50394c;'></span>Thursday</li>
-       <li><span style='background:#4040a1;'></span>Friday</li>
+       <li><span style='background:#ff1000;'></span>Recreational Green Space</li>
+       <li><span style='background:#405d27;'></span>Community Green Space</li>
+       <li><span style='background:#034f84;'></span>Educational & Historic Green Space</li>
+       <li><span style='background:#86af49;'></span>Greenway and Watershed</li>
+       <li><span style='background:#feb236;'></span>Other Green Space</li>
      </ul>
    </div>
  </div>
 
+ <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+   <script>
+     var slides = [
+       { title: "Philadelphia Green Space"},
+       { title: "South Philadelphia Green Space", main: "South Philadelphia has some great places, such as Marconi Plaza, FDR park and Lincoln financial field"},
+       { title: "Center Philadelphia Green Space", main: "Center city has the most popular green space among the city, including museums, Rittehouse Square and City Hall"},
+       { title: "North Philadelphia Green Space", main: "North Philadelphia has some beautiful natural parks, such as Fairmount Park, Wissahickon Park"},
+       { title: "West Philadelphia Green Space", main: "Most of green space in South Philadelphia are within the University City. Sports field, pocket parks provide space for students to relax" },
+     ]
+     var currentSlide = 0
 
+     var mapshow = function() {
+       if(currentSlide == 1) {
+        map.setView(new L.LatLng(39.910, -75.1590), 14)
+
+       }
+       else if (currentSlide == 2){
+         map.setView(new L.LatLng(39.950, -75.1590), 14)
+
+       }
+       else if (currentSlide == 3) {
+         map.setView(new L.LatLng(40.000, -75.1590), 14)
+
+       }
+      else if (currentSlide == 4) {
+         map.setView(new L.LatLng(39.955, -75.2200), 14)
+
+        }
+      else if (currentSlide == 0) {
+              map.setZoom(11);
+            }
+     }
+
+     var loadSlide = function(slide) {
+       $('#title').text(slide.title)
+       $('#mainslide').text(slide.main)
+     }
+
+     var next = function() {
+       if (currentSlide == slides.length - 1) {
+       } else {
+         $('#my-button').show()
+         currentSlide = currentSlide + 1
+         loadSlide(slides[currentSlide])
+       }
+
+       if (currentSlide == slides.length - 1) {
+         $('#my-button').hide()
+       }
+     }
+
+
+     var before = function() {
+       if (currentSlide == 0) {
+       } else {
+         $('#my-button1').show()
+         currentSlide = currentSlide - 1
+         loadSlide(slides[currentSlide])
+       }
+
+       if (currentSlide == 0) {
+         $('#my-button1').hide()
+       }
+     }
+
+
+
+     $('#my-button').click(function(e) {
+       next()
+       mapshow(currentSlide)
+     });
+     $('#my-button1').click(function(e) {
+       before()
+       mapshow(currentSlide)
+     });
+   </script>
     </div>
     <!-- Javascript Imports -->
     <script src="js/jquery-2.2.0.js"></script>
