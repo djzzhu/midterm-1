@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <!-- CSS Imports -->
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+    	body { margin: 0; padding: 0; }
+    	#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    </style>
+
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div id="intro">
+        <h1 id='title' style="color:green; font-weight:bold;">Philadelphia Green Space </h1>
+        <p id= "mainslide" class="main" style="font-size: 16pt; color:white;">The city of Philadelphia have abundant green spaces, either within the community or near the riverway.
+        These valuable spaces provide various experience for people to explore this wonderful city.</p>
+        <img id = 'image' src="https://generocity.org/philly/wp-content/uploads/sites/2/2018/07/Fairmount-Park-Visit-Philadelphia-skyline-green.jpg"
+          alt="Fairmount Park" height="250" width="300">
+      </div>
+
+        <div id="results" class="results" style="display: none;">
+        <h1 class="information"  style="color:green;font-weight:bold;">asset name</h1>
+        <p>Please check this <span class="address" style="color:red; font-size: 10pt; font-weight:bold;">
+        address name</span> address, if you need additional information.</p>
+        </div>
+
+      <div class="leftbar">
+        <nav class="legend-bar1">
+            <div class="container-fluid clearfix">
+      <div class="legend1" style="float: right">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Explore </button>
+      <div class="dropdown-menu dropdown-menu-right">
+        <button id = "lbutton1" class="dropdown-item" type="button" >South Philadelphia </button>
+        <button id = "lbutton2" class="dropdown-item" type="button" >Center Philadelphia</button>
+        <button id = "lbutton3" class="dropdown-item" type="button" >North Philadelphia</button>
+        <button id = "lbutton4" class="dropdown-item" type="button" >West Philadelphia</button>
+       </div>
+      </div>
+      <div class="about" style="float: right">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> About </button>
+      <div class="dropdown-menu dropdown-menu-right">
+        <button id = "abutton1" class="dropdown-item" type="button" >Background </button>
+        <button id = "abutton2" class="dropdown-item" type="button" >Contact</button>
+       </div>
+      </div>
+     </div>
+     </nav>
+     </div>
+    </div>
+
+<div class = "container">
+  </div>
+
+  <!-- Legend -->
+  <div class="rightbar">
+    <nav class="legend-bar">
+  <div class="legend" style="float: left">
+    <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" > Green Space Usage </button>
+  <div class="dropdown-menu dropdown-menu-right">
+    <button id = "dbutton1" class="dropdown-item" type="button" style='background:#ff1000;' data-toggle="modal" data-target="#bd-example-modal-lg1" data-toggle="tooltip"
+     data-placement="bottom" title="Recreational Green Space">Recreational Green Space</button>
+    <button id = "dbutton2" class="dropdown-item" type="button" style='background:#405d27;'
+    data-toggle="modal" data-target="#bd-example-modal-lg2" data-toggle="tooltip"
+     data-placement="bottom" title="Community Green Space">Community Green Space</button>
+    <button id = "dbutton3" class="dropdown-item" type="button" style='background:#034f84;'
+    data-toggle="modal" data-target="#bd-example-modal-lg3" data-toggle="tooltip"
+     data-placement="bottom" title="Educational & Historic Green Space">Educational & Historic Green Space</button>
+    <button id = "dbutton4" class="dropdown-item" type="button" style='background:#86af49;'
+    data-toggle="modal" data-target="#bd-example-modal-lg4" data-toggle="tooltip"
+     data-placement="bottom" title="Greenway and Watershed">Greenway and Watershed</button>
+    <button id = "dbutton5" class="dropdown-item" type="button" style='background:#feb236;'
+    data-toggle="modal" data-target="#bd-example-modal-lg5" data-toggle="tooltip"
+     data-placement="bottom" title="Other Green Space">Other Green Space</button>
+   </div>
+  </div>
+
+
+ </nav>
+ </div>
+
+
+ <div id="bd-example-modal-lg1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <canvas id="mychart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="bd-example-modal-lg2" class="modal fade" role="dialog">
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal">&times;</button>
+     </div>
+     <div class="modal-body">
+       <canvas id="mychart1"></canvas>
+     </div>
+   </div>
+ </div>
+</div>
+
+<div id="bd-example-modal-lg3" class="modal fade" role="dialog">
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal">&times;</button>
+     </div>
+     <div class="modal-body">
+       <canvas id="mychart2"></canvas>
+     </div>
+   </div>
+ </div>
+</div>
+
+<div id="bd-example-modal-lg4" class="modal fade" role="dialog">
+ <div class="modal-dialog">
+   <div class="modal-content">
+     <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal">&times;</button>
+     </div>
+     <div class="modal-body">
+       <canvas id="mychart3"></canvas>
+     </div>
+   </div>
+ </div>
+</div>
+
+<script>
+let mychart = document.getElementById('mychart').getContext('2d');
+  let barchart = new Chart(mychart, {
+    type:'bar',
+    data:{
+      labels:['Walnut Lane Golf Course','Philadelphia Zoological Gardens','Juniata Golf Course','Edgley Fields','Sedgley Woods Disc Golf Course'],
+      datasets:[{
+        label: 'Acre',
+        data:[85.85660479,54.76165151,
+         92.69754802,46.63105097,32.42343168],
+     backgroundColor:['rgba(255,99,132,0.6)','rgba(54,162,86,0.6)',
+     'rgba(75,192,192,0.6)',
+     'rgba(153,102,255,0.6)',
+     'rgba(255,159,64,0.6)'
+     ],
+    borderWidth:1,
+    borderColor:'#777',
+    hoverBorderWidth:3,
+    hoverBorderColor:'#000'
+   }],
+    },
+    options:{
+      title:{
+        display:true,
+        text:'Recommended Recreational Green Space(by Acres)',
+        fonsize:25,
+      },
+      legend:{
+        position:'right',
+        labels:{
+          fontColor:'#000',
+          display:false,
+        }
+      }
+    },
+  });
+
+  let mychart1 = document.getElementById('mychart1').getContext('2d');
+    let barchart1 = new Chart(mychart1, {
+      type:'bar',
+      data:{
+        labels:['Fairmount Park Horticulture Center','Penrose Playground','Franklin Delano Roosevelt Park','Bartrams Garden','Franklin Square'],
+        datasets:[{
+          label: 'Acre',
+          data:[51.51487001,
+         10.4,
+         348.5826552,
+         45,
+         7.16495218
+          ],
+       backgroundColor:['rgba(255,99,132,0.6)','rgba(54,162,86,0.6)',
+       'rgba(75,192,192,0.6)',
+       'rgba(153,102,255,0.6)',
+       'rgba(255,159,64,0.6)'
+       ],
+      borderWidth:1,
+      borderColor:'#777',
+      hoverBorderWidth:3,
+      hoverBorderColor:'#000'
+     }],
+      },
+      options:{
+        title:{
+          display:true,
+          text:'Recommended Community Green Space (by Acres)',
+          fonsize:25,
+        },
+        legend:{
+          position:'right',
+          labels:{
+            fontColor:'#000',
+            display:false,
+          }
+        }
+      },
+    });
+
+    let mychart2 = document.getElementById('mychart2').getContext('2d');
+      let barchart2 = new Chart(mychart2, {
+        type:'bar',
+        data:{
+          labels:['Philadelphia Museum of Art','Memorial Area','Chamounix Aerial Adventure Course',
+           'Barnes Foundation Museum',
+           'Historic Rittenhouse Town'
+           ],
+          datasets:[{
+            label: 'Acre',
+            data:[24.68320427,
+              54.77220663,
+              16.8,
+              5.38768114,
+              12.5
+               ],
+         backgroundColor:['rgba(255,99,132,0.6)','rgba(54,162,86,0.6)',
+         'rgba(75,192,192,0.6)',
+         'rgba(153,102,255,0.6)',
+         'rgba(255,159,64,0.6)'
+         ],
+        borderWidth:1,
+        borderColor:'#777',
+        hoverBorderWidth:3,
+        hoverBorderColor:'#000'
+       }],
+        },
+        options:{
+          title:{
+            display:true,
+            text:'Recommended Educational & Historic Green Space(by Acres)',
+            fonsize:25,
+          },
+          legend:{
+            position:'right',
+            labels:{
+              fontColor:'#000',
+              display:false,
+            }
+          }
+        },
+      });
+
+      let mychart3 = document.getElementById('mychart3').getContext('2d');
+        let barchart3 = new Chart(mychart3, {
+          type:'bar',
+          data:{
+            labels:['wissahickon valley park','east fairmount park', 'west fairmount park',
+               'cobbs creek park',
+              'pennypack park'
+              ],
+            datasets:[{
+              label: 'Acre',
+              data:[2042,950,1120,851,1600
+             ],
+           backgroundColor:['rgba(255,99,132,0.6)','rgba(54,162,86,0.6)',
+           'rgba(75,192,192,0.6)',
+           'rgba(153,102,255,0.6)',
+           'rgba(255,159,64,0.6)'
+           ],
+          borderWidth:1,
+          borderColor:'#777',
+          hoverBorderWidth:3,
+          hoverBorderColor:'#000'
+         }],
+          },
+          options:{
+            title:{
+              display:true,
+              text:'Recommended Greenway and Watershed(by Acres)',
+              fonsize:25,
+            },
+            legend:{
+              position:'right',
+              labels:{
+                fontColor:'#000',
+                display:false,
+              }
+            }
+          },
+        });
+</script>
+
+
+</script>
+
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.js"></script>
+    <link
+    rel="stylesheet"
+    href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.0.2/mapbox-gl-directions.css"
+    type="text/css"
+    />
+
+
+    <!-- Map -->
+    <div id="map" class="map"></div>
+
+
+    <script>
+    	mapboxgl.accessToken = 'pk.eyJ1IjoiZGVubmlzODAwMCIsImEiOiJjazh1bGpueDIwY2VjM2ZwNnV6bXlwaWp5In0.uBuHwp5X9GHrrQgQCuJSnw';
+    var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [-75.1090,40.000],
+    zoom: 11
+    });
+
+    map.addControl(
+    new MapboxDirections({
+    accessToken: mapboxgl.accessToken
+    }),
+    'bottom-left'
+    );
+
+
+    </script>
+
+
+
+ <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+   <script>
+     var slides = [
+       { title: "Philadelphia Green Space"},
+       { title: "South Philadelphia Green Space", main: "South Philadelphia has some great places, such as Marconi Plaza, FDR park and Lincoln financial field"},
+       { title: "Center Philadelphia Green Space", main: "Center city has the most popular green space among the city, including museums, Rittehouse Square and City Hall"},
+       { title: "North Philadelphia Green Space", main: "North Philadelphia has some beautiful natural parks, such as Fairmount Park, Wissahickon Park"},
+       { title: "West Philadelphia Green Space", main: "Most of green space in South Philadelphia are within the University City. Sports field, pocket parks provide space for students to relax" },
+     ]
+
+     var about = [
+       { title:"Background", main: "This application shows each region color coded based the type of the green spaces To get more information about asset name and address, click on that region on the map"},
+       { title:"Contact", main: "Dennis Jiazheng Zhu Email:djzzhu@upenn.edu"}
+     ]
+
+     var loadSlide = function(slide) {
+       $('#title').text(slide.title)
+       $('#mainslide').text(slide.main)
+     }
+
+
+     $('#lbutton1').click(function(e) {
+       loadSlide(slides[1]);
+       map.setView(new L.LatLng(39.910, -75.1590), 14);
+       $('#image').attr('src', 'https://www.inquirer.com/resizer/RT9KL3rYKf_hDhpeMBP1Yy_2OYw=/1400x932/smart/arc-anglerfish-arc2-prod-pmn.s3.amazonaws.com/public/YFUCV4KFVBHE3DJQSVXUCBTGH4.jpg')
+     });
+
+     $('#lbutton2').click(function(e) {
+       loadSlide(slides[2]);
+       map.setView(new L.LatLng(39.950, -75.1590), 14);
+       $('#image').attr('src', 'https://www.visitphilly.com/wp-content/uploads/2018/02/Oval-2018-Yoga_AYee_1200x900-1044x781.jpg')
+     });
+
+     $('#lbutton3').click(function(e) {
+       loadSlide(slides[3]);
+       map.setView(new L.LatLng(40.000, -75.1590), 14);
+       $('#image').attr('src', 'https://live.staticflickr.com/65535/47946966736_b93fba0cb9_b.jpg')
+     });
+
+     $('#lbutton4').click(function(e) {
+       loadSlide(slides[4]);
+       map.setView(new L.LatLng(39.955, -75.2200), 14);
+       $('#image').attr('src', 'https://thegrio.com/wp-content/uploads/2019/02/UPenn.jpg')
+     });
+
+     $('#abutton1').click(function(e) {
+       loadSlide(about[0])
+     });
+
+     $('#abutton2').click(function(e) {
+       loadSlide(about[1])
+     });
+
+
+
+
+
+   </script>
+
+    <!-- Javascript Imports -->
+    <script src="js/jquery-2.2.0.js"></script>
+    <script src="js/underscore.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.10.0/mapbox-gl.js"></script>
+  </body>
+</html>

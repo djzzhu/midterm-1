@@ -1,13 +1,12 @@
-/* =====================
-Leaflet Configuration
-===================== */
-
 var map = L.map('map', {
   center: [40.000, -75.1090],
   zoom: 11
 });
-var Stamen_TonerLite = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-  attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+
+var Stamen_TonerLite = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiZGVubmlzODAwMCIsImEiOiJjazh1bGpueDIwY2VjM2ZwNnV6bXlwaWp5In0.uBuHwp5X9GHrrQgQCuJSnw', {
+  attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+'Imagery © <a href="http://mapbox.com">Mapbox</a>',
   subdomains: 'abcd',
   minZoom: 0,
   maxZoom: 20,
@@ -71,6 +70,10 @@ var myStyle = function(data) {
 }
 };
 
+
+
+
+
 var showResults = function() {
   $('#intro').hide();
   $('#results').show();
@@ -87,22 +90,69 @@ var eachFeatureFunction = function(layer) {
   });
 };
 
+
+
+
+
+
 var myFilter = function(feature) {
     if(feature.properties.PPR_USE != '')
   return true;
 };
 
+
+
+
+var state = {
+  position: {
+    marker: null,
+    updated: null
+  }
+};
+
+var goToOrigin = _.once(function(lat, lng) {
+  map.setView([lat, lng], 14);
+});
+
+var updatePosition = function(lat, lng, updated) {
+  if (state.position.marker) { map.removeLayer(state.position.marker); }
+  state.position.marker = L.circleMarker([lat, lng], {color: "red"});
+  state.position.updated = updated;
+  state.position.marker.addTo(map);
+  goToOrigin(lat, lng);
+};
+
+var origin;
+var destination;
+
+
+
 $(document).ready(function() {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      origin = [position.coords.longitude, position.coords.latitude]
+      updatePosition(position.coords.latitude, position.coords.longitude, position.timestamp);
+    });
+  } else {
+    alert("Unable to access geolocation API!");
+  };
+
   $.ajax(dataset).done(function(data) {
     var parsedData = JSON.parse(data);
     featureGroup = L.geoJson(parsedData, {
       style: myStyle,
-      filter: myFilter
+      filter: myFilter,
     }).addTo(map);
 
     featureGroup.eachLayer(eachFeatureFunction);
   });
 });
+
+
+
+
+
+
 
 
 /* =================

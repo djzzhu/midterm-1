@@ -1,0 +1,64 @@
+body, html {
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+.background {
+  background-image: url("https://www.visitphilly.com/wp-content/uploads/2017/12/FairmountPark-R-Kennedy-2200VP.jpg");
+  filter: blur(0.5px);
+  -webkit-filter: blur(0.5px);
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  animation: slide 10s infinite;
+}
+
+
+.background1 {
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 80%;
+  padding: 20px;
+  text-align: center;
+  text-decoration:none;
+}
+
+.view {
+  padding: 10px 24px;
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-decoration:none;
+  font-size:18px;
+  border-radius:20px;
+  border: 3px solid;
+  color: #f9f3f4;
+}
+
+.view:hover {
+  color: #2196f3;
+}
+
+@keyframes slide {
+  0%{
+    background-image: url("https://www.visitphilly.com/wp-content/uploads/2017/12/FairmountPark-R-Kennedy-2200VP.jpg")
+  }
+  33%{
+    background-image: url("https://www.visitphilly.com/wp-content/uploads/2017/12/Mario_Lanza_Park_Queen_village_Philadelphia-R.Kennedy-VP-2200x1237.jpg")
+  }
+  67%{
+    background-image: url("https://www.genosteaks.com/wp-content/uploads/2018/01/3046115646_dd7a88fc1a_b-1024x650.jpg")
+  }
+}
